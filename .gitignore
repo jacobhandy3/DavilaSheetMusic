@@ -60,8 +60,12 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+<<<<<<< HEAD
 settings.py
 db_info.py
+=======
+
+>>>>>>> adda68cdeb5a91b2b428d1e41c1f990464b880eb
 # Flask stuff:
 instance/
 .webassets-cache
@@ -84,7 +88,11 @@ ipython_config.py
 
 # pyenv
 .python-version
+<<<<<<< HEAD
 env/
+=======
+
+>>>>>>> adda68cdeb5a91b2b428d1e41c1f990464b880eb
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
