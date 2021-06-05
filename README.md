@@ -19,6 +19,9 @@ This project was run on Debian WSL.
 
 <b>Building the Server</b>
 
+First step is to clone the repository.
+Then, navigate to the new folder and follow the steps below.
+
 It is best to use the python `virtualenv` tool to build locally:
 
 ```sh
@@ -28,3 +31,5 @@ $ cd backend
 $ pip install -r requirements.txt
 $ python3 manage.py runserver
 ```
+
+Make sure to add a settings.py file in backend/backend and connect a database system.
