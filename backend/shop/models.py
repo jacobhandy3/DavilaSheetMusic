@@ -19,6 +19,7 @@ class SheetMusic(models.Model):
     description = models.TextField()
     cost = models.DecimalField(max_digits=6,decimal_places=2,validators=[MinValueValidator(limit_value=0,message="Cannot input cost amount lower than $0!")])
     date_added = models.DateTimeField(auto_now_add=True)
+    original = models.BooleanField(default=False)
     visible = models.BooleanField(default=False)
     slug = models.SlugField(max_length=200,unique=True,blank=True)
     fpath = models.TextField(verbose_name="file path",blank=True,null=True)
@@ -29,6 +30,9 @@ class SheetMusic(models.Model):
     def describeLevel(self):
         """Returns the human readable name of the integer assigned to level"""
         return self.levels[self.level-1][1]
+    def describeOriginal(self):
+        """Returns 'Original' or 'Arrangement' depending on whether visible is true or false"""
+        return "Original" if self.original == True else "Arrangement"
     def get_absolute_url(self):
         """Returns the url to access a particular instance of the model."""
         return reverse("sheetmusic-detail", args=[self.slug])

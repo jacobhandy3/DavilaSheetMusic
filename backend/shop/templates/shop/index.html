@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="album py-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for sheet in sheetmusic %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal"><a href="{{ sheet.get_absolute_url }}">{{ sheet.title }}</a></h4>
+                    </div>
+                    <div class="card-body">
+                    <p class="card-text">{{ sheet.format }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">{{ sheet.describeLevel }}</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">${{ sheet.cost }}</button>
+                        </div>
+                        <small class="text-muted">{{ sheet.describeOriginal }}</small>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

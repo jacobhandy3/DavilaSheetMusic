@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="/shop"><-- Back to list</a><br></br>
+
+<h2>{{ product }}</h2>
+<div>
+    <h4>Cost: {{ product.cost }}</h4>
+    <h4>Level: {{ product.level }}</h4>
+    <p>{{ product.format }}</p>
+    <p>{{ product.description }}</p>
+    <p>
+        Instruments: {{ product.instrument }}
+    </p>
+    <p>
+        Ensemble: {{ product.ensemble }}
+    </p>
+    <h4>Genre: {{ product.genre }}</h4>
+</div>
+{% endblock %}

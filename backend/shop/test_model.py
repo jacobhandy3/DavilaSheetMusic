@@ -18,6 +18,7 @@ class SheetMusicTestCase(TestCase):
             description="Test Description",
             cost=24.99,
             visible=True,
+            original=True,
         )
         SheetMusic.objects.create(
             publisher=testUser,
@@ -29,6 +30,7 @@ class SheetMusicTestCase(TestCase):
             description="Test Description",
             cost=5.99,
             visible=False,
+            original=False,
         )
     def test_get_absolute_url(self):
         """
@@ -84,6 +86,22 @@ class SheetMusicTestCase(TestCase):
         )
         self.assertEqual(testSheet1.describeLevel(),"Advanced")
         self.assertEqual(testSheet2.describeLevel(), "Advanced")
+    def test_describe_original(self):
+        """
+        Tests custom method that outputs 'Original' or 'Arrangement' depending on original model field value
+        """
+        testSheet1 = SheetMusic.objects.get(
+            title="Songs From The Book of Revelation (Cantata for SATB choir and piano accompaniment)",
+            format="Score",
+            level=3,
+        )
+        testSheet2 = SheetMusic.objects.get(
+            title="ii. la llorona (leyendas del valle)",
+            format="Score and parts",
+            level=3,
+        )
+        self.assertEqual(testSheet1.describeOriginal(),"Original")
+        self.assertEqual(testSheet2.describeOriginal(), "Arrangement")
     def test_slug_created(self):
         """Test that slug is created like I think its going to be created"""
         title_slug = "songs-from-the-book-of-revelation-cantata-for-satb-choir-and-piano-accompaniment"
