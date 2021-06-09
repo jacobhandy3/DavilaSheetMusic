@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import *
 
-#serializer for model "Rule" for JSON conversion for the frontend
+#serializer for model  for JSON conversion for the frontend
 class SheetMusicSerializer(serializers.ModelSerializer):
     #dont allow client to accidently create an instance under a different user
     publisher = serializers.HiddenField(default=serializers.CurrentUserDefault())

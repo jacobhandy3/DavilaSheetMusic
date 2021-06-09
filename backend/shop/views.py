@@ -16,7 +16,7 @@ class SheetMusicList(generics.ListAPIView):
     def get_queryset(self):
         return SheetMusic.objects.filter(visible=True,original=True)
     def get(self, request):
-        #return filtered objects WHERE objects are public
+        #return filtered objects WHERE objects are public and original
         queryset = SheetMusic.objects.filter(visible=True,original=True)
         return Response({"sheetmusic": queryset})
 
@@ -29,9 +29,10 @@ class ArrangeMusicList(generics.ListAPIView):
     def get_queryset(self):
         return SheetMusic.objects.filter(visible=True,original=False)
     def get(self, request):
-        #return filtered objects WHERE objects are public
+        #return filtered objects WHERE objects are public and arrangements
         queryset = SheetMusic.objects.filter(visible=True,original=False)
         return Response({"sheetmusic": queryset})
+
 
 #Allows GET, PUT, and DELETE of specific SheetMusic for authenticated users
 class SheetMusicDetail(generics.RetrieveAPIView):
@@ -43,5 +44,10 @@ class SheetMusicDetail(generics.RetrieveAPIView):
     lookup_field = "slug"
 
     def get(self, request, slug):
-        queryset = SheetMusic.objects.get(slug=slug)
-        return Response({"product": queryset})
+        #get the object with matching slug
+        obj = SheetMusic.objects.get(slug=slug)
+        #get list of product resources
+        queryset = ProductResources.objects.filter(product=obj)
+        """return a dictionary of the product and its links
+            iff they exist, otherwise just the object"""
+        return Response({"product": obj,"links":queryset}) if queryset.count() > 0 else Response({"product": obj}) 
