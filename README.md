@@ -19,17 +19,30 @@ This project was run on Debian WSL.
 
 <b>Building the Server</b>
 
-First step is to clone the repository.
-Then, navigate to the new folder and follow the steps below.
+1. Install Linux or [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+2. Update and Upgrade packages
+```sh
+$ sudo apt-get update
+$ sudo apt-get upgrade
+```
+3. Install [Python](https://medium.com/@rhdzmota/python-development-on-the-windows-subsystem-for-linux-wsl-17a0fa1839d) and [virtualenv](https://pythonbasics.org/virtualenv/)
+4. Clone the repository (specific branch)
+```sh
+$ git clone --branch [branch name] [git url]
+```
 
 It is best to use the python `virtualenv` tool to build locally:
 
 ```sh
+$ cd [repository folder]
 $ virtualenv -p python3 env
 $ source env/bin/activate
 $ cd backend
 $ pip install -r requirements.txt
+$ cd backend
+#Generate a settings.py here
+#Setup a database with Django
 $ python3 manage.py runserver
 ```
 
-Make sure to add a settings.py file in backend/backend and connect a database system.
+Done! You are ready to start contributing!
