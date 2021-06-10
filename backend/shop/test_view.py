@@ -15,24 +15,24 @@ class SheetMusicTests(APITestCase):
             SheetMusic.objects.create(
                 publisher=testUser,
                 title="Sheet Music no. " + str(i),
-                format="Score",
-                level=(i % 3) + 1,
-                genre="Tests",
+                level=(i % 5) + 1,
                 description="Test Description...",
                 cost=(i ** 3),
                 visible=True,
                 original=True if i < 5 else False,
             )
+        Genre.objects.create(name="Pop")
+        Genre.objects.create(name="Rock")
+        Instrument.objects.create(name="Tuba")
+        Instrument.objects.create(name="Choir")
+        Format.objects.create(name="SATB")
+        Format.objects.create(name="4-Part")
     
     def test_view_url_exists_at_desired_location(self):
         client = APIClient()
         client.login(username="JohnDoe",password="DoeTheMan123")
         #check original music url is accessible
-        response = client.get("/shop/original/")
-        self.assertEqual(response.status_code, 200)
-
-        #check arrangement music url is accessible
-        response = client.get("/shop/arrangement/")
+        response = client.get("/shop/")
         self.assertEqual(response.status_code, 200)
 
         #check individual music url is accessible
@@ -40,13 +40,10 @@ class SheetMusicTests(APITestCase):
         response = client.get("/shop/" + obj.slug)
         self.assertEqual(response.status_code, 200)
 
-    def test_list_urls_accessible_by_name(self):
+    def test_list_url_accessible_by_name(self):
         client = APIClient()
         client.login(username="JohnDoe",password="DoeTheMan123")
         response = client.get(reverse("sheetmusic-list"))
-        self.assertEqual(response.status_code, 200)
-
-        response = client.get(reverse("arrangemusic-list"))
         self.assertEqual(response.status_code, 200)
 
     def test_detail_url_accessible_by_name(self):
@@ -61,16 +58,91 @@ class SheetMusicTests(APITestCase):
         client.login(username="JohnDoe",password="DoeTheMan123")
         response = client.get(reverse("sheetmusic-list"))
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(len(response.data["sheetmusic"]) == 5)
+        """Tests all sheetmusic,genres,instruments, and formats are being sent"""
+        self.assertTrue(len(response.data["sheetmusic"]) == 10)
+        self.assertTrue(len(response.data["genres"]) == 2)
+        self.assertTrue(len(response.data["instruments"]) == 2)
+        self.assertTrue(len(response.data["formats"]) == 2)
     
-    def test_arrangemusic_list(self):
+    def test_list_original_queryparam(self):
+        """Test that query param returns correctly filtered results"""
         client = APIClient()
         client.login(username="JohnDoe",password="DoeTheMan123")
-        response = client.get(reverse("arrangemusic-list"))
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(len(response.data["sheetmusic"]) == 5)
+        #dict attached in response represents the query param
+        response = client.get("/shop/",{"original":True})
+        queryset = SheetMusic.objects.filter(original=True)
+        self.assertEqual(len(queryset),len(response.data["sheetmusic"]))
+
+    def test_list_genre_queryparam(self):
+        """Test that query param returns correctly filtered results"""
+        client = APIClient()
+        client.login(username="JohnDoe",password="DoeTheMan123")
+        #Add the many-to-many fields
+        obj1 = SheetMusic.objects.get(title="Sheet Music no. 1")
+        obj1.genre.add(Genre.objects.get(slug="pop"))
+
+        obj2 = SheetMusic.objects.get(title="Sheet Music no. 2")
+        obj2.genre.add(Genre.objects.get(slug="pop"))
+        #dict attached in response represents the query param
+        response = client.get("/shop/",{"genre":"pop"})
+        # Ex:genre__slug is how you access the slug field of the genre model through the many-to-many field
+        queryset = SheetMusic.objects.filter(genre__slug="pop")
+        self.assertEqual(len(queryset),len(response.data["sheetmusic"]))
+
+    def test_list_instrument_queryparam(self):
+        """Test that query param returns correctly filtered results"""
+        client = APIClient()
+        client.login(username="JohnDoe",password="DoeTheMan123")
+        #Add the many-to-many fields
+        obj1 = SheetMusic.objects.get(title="Sheet Music no. 1")
+        obj1.instrument.add(Instrument.objects.get(slug="tuba"))
+
+        obj2 = SheetMusic.objects.get(title="Sheet Music no. 2")
+        obj2.instrument.add(Instrument.objects.get(slug="tuba"))
+        #dict attached in response represents the query param
+        response = client.get("/shop/",{"instrument":"tuba"})
+        # Ex:instrument__slug is how you access the slug field of the instrument model through the many-to-many field
+        queryset = SheetMusic.objects.filter(instrument__slug="tuba")
+        self.assertEqual(len(queryset),len(response.data["sheetmusic"]))
+
+    def test_list_format_queryparam(self):
+        """Test that query param returns correctly filtered results"""
+        client = APIClient()
+        client.login(username="JohnDoe",password="DoeTheMan123")
+        #Add the many-to-many fields
+        obj1 = SheetMusic.objects.get(title="Sheet Music no. 1")
+        obj1.format.add(Format.objects.get(slug="satb"))
+
+        obj2 = SheetMusic.objects.get(title="Sheet Music no. 2")
+        obj2.format.add(Format.objects.get(slug="satb"))
+        #dict attached in response represents the query param
+        response = client.get("/shop/",{"_format":"satb"})
+        # Ex:format__slug is how you access the slug field of the format model through the many-to-many field
+        queryset = SheetMusic.objects.filter(format__slug="satb")
+        self.assertEqual(len(queryset),len(response.data["sheetmusic"]))
+
+    def test_list_mult_queryparams(self):
+        """Test that multiple queryparams correctly filters results"""
+        client = APIClient()
+        client.login(username="JohnDoe",password="DoeTheMan123")
+        obj1 = SheetMusic.objects.get(title="Sheet Music no. 1")
+        obj2 = SheetMusic.objects.get(title="Sheet Music no. 2")
+        #Add the many-to-many fields
+        obj1.genre.add(Genre.objects.get(slug="pop"))
+        obj1.instrument.add(Instrument.objects.get(slug="tuba"))
+        obj1.format.add(Format.objects.get(slug="satb"))
+
+        obj2.genre.add(Genre.objects.get(slug="pop"))
+        obj2.instrument.add(Instrument.objects.get(slug="tuba"))
+        obj2.format.add(Format.objects.get(slug="satb"))
+        #dict attached in response represents the query param
+        response = client.get("/shop/",{"original":True,"genre":"pop","instrument":"tuba","_format":"satb"})
+        # Ex:format__slug is how you access the slug field of the format model through the many-to-many field
+        queryset = SheetMusic.objects.filter(original=True,genre__slug="pop",instrument__slug="tuba",format__slug="satb")
+        self.assertEqual(len(queryset),len(response.data["sheetmusic"]))
 
     def test_sheetmusic_get(self):
+        """Test that both the product and its links can be sent"""
         client = APIClient()
         client.login(username="JohnDoe",password="DoeTheMan123")
         obj = SheetMusic.objects.get(title="Sheet Music no. 1")
@@ -79,4 +151,4 @@ class SheetMusicTests(APITestCase):
         resources = ProductResources.objects.filter(product=obj)
         response = client.get(reverse("sheetmusic-detail",args=(obj.slug,)))
         self.assertEqual(response.data["product"],obj)
-        self.assertEqual(response.data["links"],resources)
+        self.assertEqual(len(response.data["links"]),len(resources))

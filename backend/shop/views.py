@@ -15,12 +15,24 @@ class SheetMusicList(generics.ListAPIView):
 
     def get(self, request):
         #return filtered objects WHERE objects are public and original
-        original_filter = self.request.query_params.get('original')
-        genre_filter = self.request.query_params.get('genre')
-        instrument_filter = self.request.query_params.get('instrument')
-        format_filter = self.request.query_params.get('format')
+        original_filter = self.request.query_params.get("original")
+        """
+        get query params from url if they exist,
+        will return None if not present
+        """
+        genre_filter = self.request.query_params.get("genre")
+        instrument_filter = self.request.query_params.get("instrument")
+        format_filter = self.request.query_params.get("_format")
         queryset = SheetMusic.objects.filter(visible=True)
+        """
+        If the filter exists then get the object
+        filter the current queryset with said filter
+
+        Note:
+            Ex:genre__slug is how you access the slug field of the genre model through the many-to-many field
+        """
         if original_filter is not None:
+            #original filter will either be True or False
             queryset = queryset.filter(original=original_filter)
         if genre_filter is not None:
             genre = get_object_or_404(Genre,slug=genre_filter)
@@ -31,9 +43,14 @@ class SheetMusicList(generics.ListAPIView):
         if format_filter is not None:
             _format = get_object_or_404(Format,slug=format_filter)
             queryset = queryset.filter(format__slug=_format.slug)
+        """
+        collect all possible genres,instruments,and formats for the side bar that helps with filtering
+        """
         genres = Genre.objects.all()
         instruments = Instrument.objects.all()
         formats = Format.objects.all()
+        #return all possible genres, instruments, and format for access in template
+        #also include filtered sheet music
         return Response({
             "genres":genres,"sheetmusic": queryset,
             "instruments":instruments,"formats":formats,
