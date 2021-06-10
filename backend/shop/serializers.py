@@ -20,3 +20,33 @@ class ProductResourcesSerializer(serializers.ModelSerializer):
         model = ProductResources
         #list fields
         fields = ("product","name","link")
+
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        #define target model
+        model = Genre
+        #list fields
+        fields = ("name","slug")
+        extra_kwargs = {
+            "url":{"view_name":"genre-detail","lookup_field":"slug"}
+        }
+
+class InstrumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        #define target model
+        model = Instrument
+        #list fields
+        fields = ("name","slug")
+        extra_kwargs = {
+            "url":{"view_name":"instrument-detail","lookup_field":"slug"}
+        }
+
+class FormatSerializer(serializers.ModelSerializer):
+    class Meta:
+        #define target model
+        model = Format
+        #list fields
+        fields = ("name","slug")
+        extra_kwargs = {
+            "url":{"view_name":"format-detail","lookup_field":"slug"}
+        }

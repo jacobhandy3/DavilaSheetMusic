@@ -9,6 +9,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
         <title>jcdavilasheetmusic</title>
     </head>
     <body>
@@ -19,21 +20,21 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Shop
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="/shop/original">Originals</a>
-                          <a class="dropdown-item" href="/shop/arrangement">Arrangements</a>
-                        </div>
-                      </li>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop/">Shop</a>
+                    </li>
                 </ul>
-                <a class="nav-link" href="{% url 'login' %}"><font color="black">Login</font></a>
-                <!-- <a class="nav-link" href="{% url 'login' %}"><font color="white">Register</font></a> -->
             </div>
+            <a class="nav-link" href="{% url 'login' %}"><font color="black">Login</font></a>
+                <!-- <a class="nav-link" href="{% url 'login' %}"><font color="white">Register</font></a> -->
         </nav>
+        <div id="subheader">
+            <div class="cart">
+              Your cart is empty.
+            </div>
+        </div>
+        <br></br>
         <div id="content">
             {% block content %}
                 You have arrived at the default page!

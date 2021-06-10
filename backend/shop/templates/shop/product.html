@@ -1,21 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <a href="/shop"><-- Back to list</a><br></br>
-
-<h2>{{ product }}</h2>
-<div>
-    <h4>Cost: {{ product.cost }}</h4>
-    <h4>Level: {{ product.level }}</h4>
-    <p>{{ product.format }}</p>
+  <div class="product-detail">
+    <img src="{% static 'img/no_image.png' %}">
+    <h1>{{ product.title }}</h1>
+    <h2>{{ product.describeOriginal }} - {{ product.describeLevel }}</h2>
+    <br></br>
+    <p class="price">${{ product.cost }}</p>
+    <button type="button" class="btn btn-primary">Add to Cart</button>
+    <br></br>
+    <br></br>
+    <h5>Description:</h5>
     <p>{{ product.description }}</p>
-    <p>
-        Instruments: {{ product.instrument }}
+    <p>Genre: 
+      {% for g in product.genre.all %}
+        {{ g.name }},
+      {% endfor %}
     </p>
-    <p>
-        Ensemble: {{ product.ensemble }}
+    <p>Instruments: 
+      {% for i in product.instrument.all %}
+        {{ i.name }}
+      {% endfor %}
     </p>
-    <h4>Genre: {{ product.genre }}</h4>
-    <p>{{ links }}</p>
-</div>
+    <p>Format: 
+      {% for f in product.format.all %}
+        {{ f.name }}
+      {% endfor %}
+    </p>
+  </div>
 {% endblock %}
