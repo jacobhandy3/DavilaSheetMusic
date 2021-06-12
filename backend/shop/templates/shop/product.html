@@ -7,10 +7,9 @@
     <img src="{% static 'img/no_image.png' %}">
     <h1>{{ product.title }}</h1>
     <h2>{{ product.describeOriginal }} - {{ product.describeLevel }}</h2>
-    <br></br>
+    <p>Composer: {{ product.composer }}</p>
     <p class="price">${{ product.cost }}</p>
     <button type="button" class="btn btn-primary">Add to Cart</button>
-    <br></br>
     <br></br>
     <h5>Description:</h5>
     <p>{{ product.description }}</p>

@@ -77,6 +77,7 @@ class SheetMusic(models.Model):
     levels = [(1,"Beginner"),(2,"Early Intermediate"),(3,"Intermediate"),(4,"Advanced Intermediate"),(5,"Advanced")]
 
     publisher = models.ForeignKey(User, on_delete=models.CASCADE)
+    composer = models.CharField(max_length=50)
     title = models.CharField(max_length=150)
     instrument = models.ManyToManyField(Instrument)
     format = models.ManyToManyField(Format)

@@ -9,6 +9,7 @@ class SheetMusicTestCase(TestCase):
         testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
         SheetMusic.objects.create(
             publisher=testUser,
+            composer="John Doe",
             title="Songs From The Book of Revelation (Cantata for SATB choir and piano accompaniment)",
             level=3,
             description="Test Description",
@@ -18,6 +19,7 @@ class SheetMusicTestCase(TestCase):
         )
         SheetMusic.objects.create(
             publisher=testUser,
+            composer="John Doe",
             title="ii. la llorona (leyendas del valle)",
             level=3,
             description="Test Description",
@@ -118,6 +120,7 @@ class SheetMusicTestCase(TestCase):
         testUser = User.objects.get(username='JohnDoe')
         sm = SheetMusic(
             publisher=testUser,
+            composer="John Doe",
             title="Songs From The Book of Revelation (Cantata for SATB choir and piano accompaniment)",
             level=3,
             description="Test Description",
@@ -134,6 +137,7 @@ class ProductResourcesTestCase(TestCase):
         testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
         SheetMusic.objects.create(
             publisher=testUser,
+            composer="John Doe",
             title="Songs From The Book of Revelation (Cantata for SATB choir and piano accompaniment)",
             level=3,
             description="Test Description",

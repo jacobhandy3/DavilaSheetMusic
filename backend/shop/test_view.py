@@ -14,6 +14,7 @@ class SheetMusicTests(APITestCase):
         for i in range(10):
             SheetMusic.objects.create(
                 publisher=testUser,
+                composer="John Doe",
                 title="Sheet Music no. " + str(i),
                 level=(i % 5) + 1,
                 description="Test Description...",
