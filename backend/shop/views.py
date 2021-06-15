@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import generics
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
+from cart.forms import *
 from .models import *
 from .serializers import *
 
@@ -69,6 +70,8 @@ class SheetMusicDetail(generics.RetrieveAPIView):
         obj = SheetMusic.objects.get(slug=slug)
         #get list of product resources
         queryset = ProductResources.objects.filter(product=obj)
+        #get form to add stuff to cart
+        cartform = CartAddForm()
         """return a dictionary of the product and its links
             iff they exist, otherwise just the object"""
-        return Response({"product": obj,"links":queryset}) if queryset.count() > 0 else Response({"product": obj})
+        return Response({"product": obj,"cart_form":cartform,"links":queryset}) if queryset.count() > 0 else Response({"product": obj,"cart_form":cartform})
