@@ -51,7 +51,7 @@ class Cart:
         if product_id not in self.cart:
             self.cart[product_id] = {"quantity":0,"price":str(product.cost)}
         #if specific quantity of item passed, set the quantity of item in cart
-        if override_quantity:
+        if override_quantity == True:
             self.cart[product_id]["quantity"] = quantity
         #otherwise, just add 1 to quantity
         else:
@@ -63,9 +63,10 @@ class Cart:
         product_id = str(product.id)
         #check if item exists in cart, then remove it and save the session
         if product_id in self.cart:
-            if self.cart[product_id] == 1:
+            if self.cart[product_id]["quantity"] == 1:
                 del self.cart[product_id]
-            self.cart[product_id]["quantity"] -= 1
+            else:
+                self.cart[product_id]["quantity"] -= 1
             self.save()
     #clear the whole cart and save the new session cookie
     def clear(self):
