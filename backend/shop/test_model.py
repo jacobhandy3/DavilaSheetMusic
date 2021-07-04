@@ -6,7 +6,7 @@ import json
 
 class SheetMusicTestCase(TestCase):
     def setUp(self):
-        testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
+        testUser = User.objects.create_user(username='JohnDoe',password='DoeTheMan123')
         SheetMusic.objects.create(
             publisher=testUser,
             composer="John Doe",
@@ -134,7 +134,7 @@ class SheetMusicTestCase(TestCase):
 
 class ProductResourcesTestCase(TestCase):
     def setUp(self):
-        testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
+        testUser = User.objects.create_user(username='JohnDoe',password='DoeTheMan123')
         SheetMusic.objects.create(
             publisher=testUser,
             composer="John Doe",
@@ -163,7 +163,7 @@ class ProductResourcesTestCase(TestCase):
 
 class GenreTestCase(TestCase):
     def setUp(self):
-        testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
+        testUser = User.objects.create_user(username='JohnDoe',password='DoeTheMan123')
         Genre.objects.create(name="Pop")
     def test_genre_created(self):
         testGenre = Genre.objects.get(slug="pop")
@@ -171,7 +171,7 @@ class GenreTestCase(TestCase):
 
 class InstrumentTestCase(TestCase):
     def setUp(self):
-        testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
+        testUser = User.objects.create_user(username='JohnDoe',password='DoeTheMan123')
         Instrument.objects.create(name="Tuba")
     def test_genre_created(self):
         testInstrument = Instrument.objects.get(slug="tuba")
@@ -179,7 +179,7 @@ class InstrumentTestCase(TestCase):
 
 class FormatTestCase(TestCase):
     def setUp(self):
-        testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
+        testUser = User.objects.create_user(username='JohnDoe',password='DoeTheMan123')
         Format.objects.create(name="SATB")
     def test_genre_created(self):
         testFormat = Format.objects.get(slug="satb")

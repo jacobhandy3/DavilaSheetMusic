@@ -2,7 +2,7 @@ from .forms import *
 from django.test import TestCase
 
 # Create your tests here.
-class CardAddFormTest(TestCase):
+class CartAddFormTest(TestCase):
     def test_form(self):
         form = CartAddForm(data={"quantity": 3,"override":True})
         self.assertTrue(form.is_valid())

@@ -10,7 +10,7 @@ from shop.models import SheetMusic
 class TestCart(TestCase):
     def setUp(self):
         #create a temporary user to create objects
-        self.testUser = User.objects.create(username='JohnDoe',password='DoeTheMan123')
+        self.testUser = User.objects.create_user(username='JohnDoe',password='DoeTheMan123')
         #setup a factory to generate API requests
         factory = APIRequestFactory()
         #apparently I need to use the session middleware to add a session to requests

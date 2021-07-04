@@ -61,7 +61,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 <<<<<<< HEAD
-settings.py
+settings_key.py
 db_info.py
 =======
 

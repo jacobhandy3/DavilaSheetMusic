@@ -5,7 +5,7 @@ from shop.models import SheetMusic
 
 class SheetMusicTests(APITestCase):
     def setUp(self):
-        self.testUser = User.objects.create(username="JohnDoe",password="DoeTheMan123")
+        self.testUser = User.objects.create_user(username="JohnDoe",password="DoeTheMan123")
         #client to login user
         self.client = APIClient()
         #test Sheet Music object to go into cart

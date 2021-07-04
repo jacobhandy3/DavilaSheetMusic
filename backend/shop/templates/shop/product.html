@@ -1,35 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <a href="/shop"><-- Back to list</a><br></br>
   <div class="product-detail">
     <img src="{% static 'img/no_image.png' %}">
     <h1>{{ product.title }}</h1>
     <p>Composer: {{ product.composer }}</p>
-    <p class="price">${{ product.cost }}</p>
     <form action="{% url 'cart-create' product.id %}" method="post">
-      {{ cart_form.as_table }}
       {% csrf_token %}
-      <input type="submit" value="Add to cart">
+      <div class="row">
+        <div class="col-2"><p class="price">${{ product.cost }}</p></div>
+        <div class="col-2">{{ cart_form|crispy }}</div>
+        <div class="col-4"><input type="submit" value="Add to cart"></div>
+      </div>
     </form>
-    <br></br>
-    <h5>Description:</h5>
-    <p>{{ product.description }}</p>
-    <p>Genre: 
-      {% for g in product.genre.all %}
-        {{ g.name }},
-      {% endfor %}
-    </p>
-    <p>Instruments: 
-      {% for i in product.instrument.all %}
-        {{ i.name }}
-      {% endfor %}
-    </p>
-    <p>Format: 
-      {% for f in product.format.all %}
-        {{ f.name }}
-      {% endfor %}
-    </p>
+  </div>
+  <br></br><br></br>
+  <div class="container">
+    <div class="row">
+      <h5>Description:</h5>
+    </div>
+    <div class="row">
+      <p>{{ product.description }}</p>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <p>Genre: 
+          {% for g in product.genre.all %}
+            {{ g.name }},
+          {% endfor %}
+        </p>
+      </div>
+      <div class="col-4">
+        <p>Instruments: 
+          {% for i in product.instrument.all %}
+            {{ i.name }}
+          {% endfor %}
+        </p>
+      </div>
+      <div class="col-4">
+        <p>Format: 
+          {% for f in product.format.all %}
+            {{ f.name }}
+          {% endfor %}
+        </p>
+      </div>
+    </div>
   </div>
 {% endblock %}

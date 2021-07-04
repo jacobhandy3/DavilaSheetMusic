@@ -5,7 +5,7 @@ from .models import *
 
 class SheetMusicTests(APITestCase):
     def setUp(self):
-        testUser = User.objects.create(username="JohnDoe",password="DoeTheMan123")
+        testUser = User.objects.create_user(username="JohnDoe",password="DoeTheMan123")
         for i in range(10):
             SheetMusic.objects.create(
                 publisher=testUser,

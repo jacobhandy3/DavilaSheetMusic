@@ -5,12 +5,28 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
         <title>jcdavilasheetmusic</title>
+        <!-- FROM PAYPAL DEVELOPER-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <style>
+            /* Media query for mobile viewport */
+            @media screen and (max-width: 400px) {
+                #paypal-button-container {
+                    width: 100%;
+                }
+            }
+            
+            /* Media query for desktop viewport */
+            @media screen and (min-width: 400px) {
+                #paypal-button-container {
+                    width: 250px;
+                }
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: transparent;">
@@ -55,4 +71,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2021–2023 Company Name</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li>
+          <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
 </html>

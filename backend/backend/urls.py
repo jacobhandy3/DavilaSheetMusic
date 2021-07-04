@@ -21,6 +21,8 @@ urlpatterns = [
     path(r"admin/", admin.site.urls),
     path(r"accounts/", include("django.contrib.auth.urls")),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path(r"privacy/",TemplateView.as_view(template_name="privacy.html"),name="privacy"),
     path(r"shop/", include("shop.urls"), name="shop"),
     path(r"cart/", include("cart.urls"), name="cart"),
+    path(r"order/", include("payment.urls"), name="payment"),
 ]
