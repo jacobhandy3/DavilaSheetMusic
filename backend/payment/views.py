@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
+from paypal.standard.forms import PayPalPaymentsForm
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
@@ -9,6 +10,7 @@ from cart.cart import Cart
 from .models import *
 from .serializers import *
 from .forms import *
+from .paypal_views import PaypalProcess
 
 # Create your views here.
 class AdminOrderList(generics.ListAPIView):
@@ -33,8 +35,10 @@ class GetOrder(generics.RetrieveAPIView):
     """Page to get order details"""
     def get(self, request, *args, **kwargs):
         form = OrderForm()
+        paypalView = PaypalProcess(request)
+        paypal_form = paypalView.payment_process()
         cart = Cart(request)
-        return render(request,"payment/collect_info.html",{"form": form,"cart": cart})
+        return render(request,"payment/collect_info.html",{"form": form,"cart": cart, "paypal_form": paypal_form})
  
 class OrderCreate(generics.CreateAPIView):
     """Manages order forms and initiates payment processes"""
@@ -57,3 +61,4 @@ class OrderCreate(generics.CreateAPIView):
         #send the user back to the order form with the form errors
         else:
             return render(request,"payment/collect_info.html",{"form": form,"cart": cart, "error":form.errors})
+

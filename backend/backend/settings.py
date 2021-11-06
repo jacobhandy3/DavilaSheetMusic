@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "crispy_forms",
+    "paypal.standard.ipn",
     "rest_framework",
     "shop",
     "cart",
@@ -94,6 +95,13 @@ DATABASES = {
 
 #key to be used to store cart info in user's session
 CART_SESSION_ID="cart"
+
+#PAYPAL STUFF
+PAYPAL_RECEIVER_EMAIL = "jakemh7@gmail.com"
+
+PAYPAL_BUY_BUTTON_IMAGE = "https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-large.png"
+
+PAYPAL_TEST = True
 
 # REST_FRAMEWORK = {
 #     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",

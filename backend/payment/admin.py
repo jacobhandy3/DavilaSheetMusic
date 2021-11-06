@@ -1,3 +1,4 @@
+from backend.exportCSV import export_to_csv
 from django.contrib import admin
 from .models import *
 # Register your models here.
@@ -13,6 +14,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ("customer","first_name","last_name","email","address","city","country","region","postal_code")
     #add a section to add order items to order
     inlines = [OrderItemInline]
+    #extra actions for the model
+    actions = [export_to_csv]
 
 # Register your models here.
 admin.site.register(Order, OrderAdmin)

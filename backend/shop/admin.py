@@ -1,3 +1,4 @@
+from backend.exportCSV import export_to_csv
 from django.contrib import admin
 from .models import *
 
@@ -7,6 +8,8 @@ class SheetMusicAdmin(admin.ModelAdmin):
     list_display = ("publisher","title","level","description","cost","visible","slug","fpath")
     filter_horizontal = ("instrument","format","genre",)
     prepopulated_fields = {"slug": ("title",)}
+    #extra actions for the model
+    actions = [export_to_csv]
 
 class ProductResourceAdmin(admin.ModelAdmin):
     list_display = ("product","name","link")
